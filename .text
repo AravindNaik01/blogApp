@@ -1,0 +1,94 @@
+Web browsers typically use port 80 for HTTP and 443 for HTTPS.
+
+new: true: By default, findByIdAndUpdate() returns the document as it was before the update. This is rarely what you want. Setting new: true tells Mongoose to return the modified document after the update has been applied.
+
+runValidators: true: When you create a post, Mongoose runs the validation rules defined in your schema (e.g., required: true). However, by default, these validators are not run on update operations. Setting runValidators: true explicitly tells Mongoose to enforce your schema rules during an update, which is essential for maintaining data integrity.
+
+//ex
+const updatePost = async (req, res) => {
+try { 1. Find the post by its ID and update it in a single atomic operation.
+const updatedPost = await Post.findByIdAndUpdate(
+req.params.id, // The ID of the post to find
+req.body, // The data to update with, coming from the request body
+{
+new: true, // Option to return the document _after_ the update has been applied
+runValidators: true, // Option to enforce schema validation rules on the update
+}
+);
+
+useState: Giving Your Component a Memory
+The useState hook is the most basic and essential hook. It allows you to declare a "state variable" inside a component. When you update this state variable, React automatically re-renders the component to reflect the new state.
+
+useState is called with an initial value and returns an array containing two elements:
+
+The current state value.
+A function to update that value.
+We use array destructuring to assign these to variables, like this: const [posts, setPosts] = useState([]);. Here, posts will hold our array of blog posts, setPosts is the function we'll call to update it, and [] is the initial value (an empty array, because we have no posts when the page first loads).
+
+
+<Link> component --> to  show url  in URL bar of respective
+
+useParams()-->get url from URl bar
+
+The useParams hook is a special function provided by react-router-dom that allows your component to read the dynamic parameters from the URL of the current route.
+If the URL is /post/123-abc, useParams() will return { id: '123-abc' }.
+
+
+
+ react-markdown and use its special <ReactMarkdown> component to transform the markdownContent string into beautifully rendered, styled HTML directly in the browser.
+
+ ReactMarkdown is a React component that takes plain Markdown text (like # Heading, **bold**, - list item) and turns it into real, styled HTML elements on your webpage.
+
+
+ What is Markdown? It's a lightweight markup language that allows you to add formatting elements to plain text documents. Created by John Gruber, its key design goal is readability. The Markdown-formatted text you write should be publishable as-is, without looking like it's been marked up with tags or formatting instructions. For example, you write # A Heading instead of <h1>A Heading</h1>.
+
+
+ This is where hashing comes in. A hashing algorithm is a one-way function that takes an input (like a password) and produces a fixed-length string of characters called a hash. This process is irreversible; you cannot get the original password back from the hash.
+
+ To make this even more secure, we use a technique called salting. A salt is a random piece of data that is added to the password before it's hashed. This ensures that even if two users have the same password, their stored hashes will be completely different. This defends against "rainbow table" attacks.
+
+ The specific hook we'll use is pre('save', ...). This function will automatically execute before any document created from our userSchema is saved to the database
+
+
+ Persistence: Data saved in localStorage stays there even after the user closes the browser tab or the entire browser. It only gets cleared if the user manually clears their browser data or if our code explicitly removes it.
+Simplicity: It has a very straightforward API: localStorage.setItem(key, value), localStorage.getItem(key), and localStorage.removeItem(key).
+
+What is a "Slug"?
+A slug is the part of a URL that identifies a specific page in a human-readable format. It's usually a lowercase version of the page's title, with spaces replaced by hyphens and special characters removed.
+
+Before (Current): /post/60c72b2f9b1d8c001f8e4e6a After (Goal): /post/my-first-post-about-react
+
+This new URL is clean, descriptive, memorable, and packed with keywords that search engines can understand. Our goal is to automatically generate a unique slug for every post based on its title
+
+What is Pagination and Why is it Essential?
+Pagination is the process of dividing a large set of data into discrete, smaller "pages". Instead of showing all 1000 posts at once, you might show 10 posts on page 1, the next 10 on page 2, and so on. This is a fundamental pattern for any application that deals with lists of data (e.g., e-commerce products, social media feeds, search results).
+
+It's essential because it dramatically improves performance by ensuring your application only ever fetches the small chunk of data it needs to display right now.
+
+On the backend, your Express server makes these query parameters available in the req.query object. We will read req.query.page and req.query.limit to understand what the frontend is asking for.
+
+To fulfill this request, Mongoose provides two incredibly powerful query methods:
+
+.limit(N): This tells the database to return a maximum of N documents.
+.skip(M): This tells the database to skip over the first M documents before it starts selecting the results.
+The magic is in combining these two. The formula to calculate how many documents to skip is: skipAmount = (pageNumber - 1) * limit
+
+Let's see it in action with a limit of 10:
+
+Page 1: (1 - 1) * 10 = 0. We skip 0 posts and take the first 10.
+Page 2: (2 - 1) * 10 = 10. We skip the first 10 posts and take the next 10.
+Page 3: (3 - 1) * 10 = 20. We skip the first 20 posts and take the next 10.
+
+
+
+
+ Twelve-Factor App methodology,
+
+ Running npm run build executes the react-scripts build command, which orchestrates a series of powerful optimization processes under the hood using tools like Webpack and Babel:
+
+Transpilation: It takes all of your modern JavaScript (ES6+ features like async/await, const, let) and your JSX syntax and transpiles it into older JavaScript (ES5) that is compatible with virtually every browser, ensuring a consistent experience for all users.
+Bundling: It intelligently crawls all of your import statements, starting from src/index.js, and bundles all your separate JavaScript files (HomePage.js, PostPage.js, all your components, etc.) into just a few, highly-optimized files. It does the same for all your CSS. This dramatically reduces the number of network requests a browser needs to make to load your site.
+Minification: It takes the bundled code and "minifies" it. This process removes every single unnecessary character—whitespace, comments, newlines—and shortens variable names (e.g., currentPage might become c). This can shrink file sizes by over 80%, leading to significantly faster load times.
+Optimization & Tree Shaking: The process analyzes your code and removes any "dead" code—functions or modules that you've imported but never actually used. This is called tree shaking.
+Output: The final result of this entire process is a new directory named build created inside your client folder. This folder contains a complete, static, and highly optimized version of your application, ready to be deployed on any static web host.
+
